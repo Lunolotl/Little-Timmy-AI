@@ -7,7 +7,7 @@ body {
   margin-top: 30px;
 }
 
-/* Title styling */
+
 h1 {
   margin-bottom: 5px;
 }
@@ -16,7 +16,7 @@ p {
   color: #555;
 }
 
-/* Chat container */
+
 .chat-container {
   width: 350px;
   height: 500px;
@@ -28,7 +28,7 @@ p {
   overflow: hidden;
 }
 
-/* Messages area */
+
 #chat-box {
   flex: 1;
   padding: 10px;
@@ -38,7 +38,7 @@ p {
   gap: 8px;
 }
 
-/* Input area */
+
 .input-area {
   display: flex;
   border-top: 1px solid #ddd;
@@ -64,7 +64,7 @@ p {
   background: #e63e5a;
 }
 
-/* Messages */
+
 .user {
   align-self: flex-end;
   background: #dcf8c6;
