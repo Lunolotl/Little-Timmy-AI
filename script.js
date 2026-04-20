@@ -9,7 +9,7 @@ function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// intent detection
+
 function detectIntent(msg) {
   msg = msg.toLowerCase();
 
@@ -22,14 +22,14 @@ function detectIntent(msg) {
   return "unknown";
 }
 
-// mood system
+
 function maybeChangeMood() {
   if (Math.random() < 0.3) {
     mood = random(moods);
   }
 }
 
-// bot responses
+
 function generateResponse(message) {
   const intent = detectIntent(message);
 
@@ -51,7 +51,7 @@ function generateResponse(message) {
   return reply;
 }
 
-// create message bubble
+
 function addMessage(text, type) {
   const div = document.createElement("div");
   div.textContent = text;
@@ -61,15 +61,15 @@ function addMessage(text, type) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// send logic
+
 function sendMessage() {
   const msg = userInput.value.trim();
   if (!msg) return;
 
-  // user message
+
   addMessage(msg, "user");
 
-  // bot response
+
   const reply = generateResponse(msg);
   setTimeout(() => {
     addMessage(reply, "bot");
@@ -80,12 +80,12 @@ function sendMessage() {
   maybeChangeMood();
 }
 
-// events
+
 sendBtn.addEventListener("click", sendMessage);
 
 userInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") sendMessage();
 });
 
-// startup message
+
 addMessage("Little Timmy is online... unfortunately.", "bloop");
