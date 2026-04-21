@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Little Timmy</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      color: white;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #eee;
+    }
+
+    .chat-container {
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: black;
+    }
+
+    #chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #eee;
+      background: #fafafa;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      outline: none;
+    }
+
+    #send-btn {
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      padding: 12px 15px;
+      cursor: pointer;
+    }
+
+    #send-btn:hover {
+      background: #e63e5a;
+    }
+
+    /* Messages */
+    .user {
+      align-self: flex-end;
+      background: #6c63ff;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 18px 18px 4px 18px;
+      max-width: 80%;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #f1f0f0;
+      padding: 10px 14px;
+      border-radius: 18px 18px 18px 4px;
+      max-width: 80%;
+    }
+
+    h6 {
+      margin-top: 10px;
+      font-weight: normal;
+      opacity: 0.8;
+      max-width: 350px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>This is Little Timmy (version 2.1)</h1>
+<p>The most ragebaitable AI known to mankind</p>
+
+<div class="chat-container">
+  <div id="chat-box"></div>
+
+  <div class="input-area">
+    <input id="user-input" placeholder="Send message" />
+    <button id="send-btn">Send</button>
+  </div>
+</div>
+
+<h6>
+  *Note: Little Timmy is intentionally annoying.
+</h6>
+
+<script>
+  const sendBtn = document.getElementById("send-btn");
+  const userInput = document.getElementById("user-input");
+  const chatBox = document.getElementById("chat-box");
+
+  const moods = ["bratty", "lazy", "angry"];
+  let mood = random(moods);
+
+  function random(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function detectIntent(msg) {
+    msg = msg.toLowerCase();
+
+    if (msg.includes("hello") || msg.includes("hi")) return "greet";
+    if (msg.includes("how are you")) return "status";
+    if (msg.includes("your name")) return "name";
+    if (msg.includes("help")) return "help";
+    if (msg.includes("love") || msg.includes("like")) return "emotion";
+
+    return "unknown";
+  }
+
+  function maybeChangeMood() {
+    if (Math.random() < 0.3) {
+      mood = random(moods);
+    }
+  }
+
+  function generateResponse(message) {
+    const intent = detectIntent(message);
+
+    const responses = {
+      greet: ["ugh... hi.", "yeah? what.", "oh it's YOU."],
+      status: ["bad.", "why do you care?", "I'm bored."],
+      name: ["I'm Little Timmy.", "you already know that.", "stop asking."],
+      help: ["no.", "figure it out.", "I'm not helping."],
+      emotion: ["that's weird.", "stop it.", "ew."],
+      unknown: ["what?", "huh?", "that made no sense."]
+    };
+
+    let reply = random(responses[intent]);
+
+    if (mood === "angry") reply = reply.toUpperCase() + "!!!";
+    if (mood === "lazy") reply = "..." + reply;
+    if (mood === "bratty") reply = reply + " 🙄";
+
+    return reply;
+  }
+
+  function addMessage(text, sender) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    div.classList.add(sender);
+    chatBox.appendChild(div);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function sendMessage() {
+    const msg = userInput.value.trim();
+    if (!msg) return;
+
+    addMessage(msg, "user");
+    addMessage(generateResponse(msg), "bot");
+
+    userInput.value = "";
+    maybeChangeMood();
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+
+  userInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  addMessage("Little Timmy is online... unfortunately.", "bot");
+</script>
+
+</body>
+</html>
